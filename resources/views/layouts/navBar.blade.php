@@ -19,7 +19,7 @@
                 <a class="nav-link {{Request::path() === 'tutors/index' ? 'active' : ''}}" href="{{ route ('tutors.index')}}">FIND TUTOR</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{Request::path() === 'tutors/create' ? 'active' : ''}}" href="{{route ('tutors.create')}}">BECOME TUTOR</a>
+                <a class="nav-link {{Request::path() === 'tutors/create_step2' ? 'active' : ''}}" href="{{route ('tutors.create_step2')}}">BECOME TUTOR</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {{Request::path() === 'pages/contact' ? 'active' : ''}}" href="{{ url ('/pages/contact')}}">CONTACT US</a>

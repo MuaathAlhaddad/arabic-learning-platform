@@ -19,7 +19,7 @@
         </div>
     @endif
 
-    <form class="shadow p-3 mb-5 bg-white rounded text-sm-center" method="post" action=" {{ route('tutors.store') }}" enctype="multipart/form-data">
+    <form class="shadow p-3 mb-5 bg-white rounded text-sm-center" method="post" action=" {{ route('tutors.store_step2') }}" enctype="multipart/form-data">
           @csrf
           <h3 class=" text-sm-center text-uppercase font-weight-bold">Become a Tutor</h3>
           <hr>

@@ -53,7 +53,7 @@
                                         {{ __('Remember Me') }}
                                     </label>
                                 </div>
-                                <a class="btn btn-link" href="{{ route('tutors.register') }}">
+                                <a class="btn btn-link" href="{{ route('tutors.create_step1') }}">
                                         {{ __('Create an account?') }}
                                 </a>
                             </div>

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Tutor;
+namespace App\Http\Controllers;
 
 use Auth;
 use App\Tutor;
-use App\StudentTutor;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\StudentTutor;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Hash;
 
 class TutorController extends Controller
 {
@@ -26,45 +25,28 @@ class TutorController extends Controller
     public function store_step1 () {
         
         $validated_attributes = $this->validateAattributes_step1();
-        $validated_attributes['password'] = Hash::make(request('password')); 
-        dd($validated_attributes);
-        $tutor = Tutor::create($validated_attributes);
-
+        $validated_attributes['password'] = Hash::make('password'); 
+        $tutor = Tutor::create([$validated_attributes]);
+        
         Auth::guard('tutor')->login($tutor);
         
         return redirect('tutors/create_step2')->with('message', 'YOU HAVE REGISTERED SUCCESSFULLY');
     }
     public function create_step2(){
-        if(isset(Auth::guard('tutor')->user()->ic_passport_no)){
-            return redirect (route('tutors.show'));
-        }
+        // if(isset(Auth::guard('tutor')->user()->ic_passport_no)){
+        //     return redirect (route('tutors.show'));
+        // }
         return view('tutors.create_step2');
     }
     
     public function store_step2(){ 
-        $validated_attributes = $this->validateAattributes_step2();
-        
-        $tutor = Tutor::findOrFail(Auth::id());
-        $tutor->address = $validated_attributes['address'];
-        $tutor->country = $validated_attributes['country'];
-        $tutor->profile_photo = $validated_attributes['profile_photo'];
-        $tutor->qualifications = $validated_attributes['qualifications'];
-        $tutor->headline = $validated_attributes['headline'];
-        $tutor->gender = $validated_attributes['gender'];
-        $tutor->tutor_desc = $validated_attributes['tutor_desc'];
-        $tutor->save();
-        $tutor->day_times()->sync(request('timeslot'));
-
+        $validated_attributes = $this->validateAattributes();
+        $this->Store_in_DB($validated_attributes);
         return redirect(route('tutors.show'))->with('message', 'ACCOUNT CREATED SUCCESSFULLY!');
     }
 
-    public function update () {
-        // $validated_attributes_step1 = $this->validateAattributes_step1();
-        $validated_attributes = $this->validateAattributes_step2();
-        
-        // $validated_attributes = array_merge($validated_attributes_step1,$validated_attributes_step2);
-        $validated_attributes['password'] = Hash::make(request('password'));
-        
+    public function update (Request $request) {
+        $validated_attributes = $this->validateAattributes();
         $this->Store_in_DB($validated_attributes);
         return redirect(route('tutors.show'))->with('message', 'YOUR ACCOUNT HAS BEEN UPDATED SUCCESSFULLY!');
     }
@@ -90,9 +72,8 @@ class TutorController extends Controller
             'tutor_desc'      => 'required|max:300',
             'timeslot'      => 'required',
         ]);
-
-        //  if the passport is 
-        if(Auth::user()->ic_passport_no == request('ic_passport_no')) {
+         
+         if(Auth::user()->ic_passport_no == request('ic_passport_no')) {
             $validatedAttributes += request()->validate([
                 'ic_passport_no'  => 'required'
             ]);
@@ -100,23 +81,24 @@ class TutorController extends Controller
              $validatedAttributes += request()->validate([
                 'ic_passport_no'  => 'required|unique:tutors,ic_passport_no'
             ]);
-         }    
-         if(Auth::user()->email == request('email')) {
-             $validatedAttributes +=request()->validate([
-                 'email'        => 'required'
-             ]);
-         }else {
-                 $validatedAttributes += request()->validate([
-                     'email'        => 'required|email|unique:tutors,email|email:rfc,dns',
-             ]);
          }
-         if(isset(Auth::user()->ic_passport_no)) {      
-            $validatedAttributes +=request()->validate([
+        
+         if(isset(Auth::user()->ic_passport_no)){      
+                $validatedAttributes +=request()->validate([
                         'first_name'      => 'bail|required|string|min:3|max:10',
                         'last_name'       => 'required|string|min:3|max:10',
                         'password'       => 'required|confirmed|min:6',
                 ]);
                 
+                if(Auth::user()->email == request('email')) {
+                    $validatedAttributes +=request()->validate([
+                        'email'        => 'required'
+                    ]);
+                }else {
+                        $validatedAttributes += request()->validate([
+                            'email'        => 'required|email|unique:tutors,email|email:rfc,dns',
+                    ]);
+                }
         }
 
         $validated_attributes =$this->store_files($validatedAttributes);

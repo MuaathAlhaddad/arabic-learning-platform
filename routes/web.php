@@ -20,8 +20,8 @@ Auth::routes();
 	
 		// guest:student
 		Route::middleware('guest:student')->group(function () {
-			Route::get('students/register', 'Student\RegisterController@showRegistrationForm')->name('students.register');
-			Route::post('students/register', 'Student\RegisterController@register')->name('students.register.submit');
+			Route::get('students/create', 'Student\StudentController@create')->name('students.create');
+			Route::post('students/store', 'Student\StudentController@store')->name('students.store');
 			Route::get('students/login', 'Student\LoginController@showLoginForm')->name('students.login');
 			Route::post('students/login', 'Student\LoginController@login')->name('students.login.submit');
 
@@ -51,15 +51,15 @@ Route::post('student_materials', 'StudentTutorController@upload_materials')->nam
 Route::group(['prefix' => 'tutors', 'namespace' =>'Tutor'], function () {
 	// guest:tutor
 	Route::middleware('guest:tutor')->group(function () {
-		Route::get('/register', 'RegisterController@showRegistrationForm')->name('tutors.register');
-		Route::post('/register', 'RegisterController@register')->name('tutors.register.submit');
+		Route::get('/create_step1', 'TutorController@create_step1')->name('tutors.create_step1');
+		Route::post('/store_step1', 'TutorController@store_step1')->name('tutors.store_step1');
 		Route::get('/login', 'LoginController@showLoginForm')->name('tutors.login');
 		Route::post('/login', 'LoginController@login')->name('tutors.login.submit');
 	});
 	// auth:tutor
 	Route::middleware('auth:tutor')->group(function () {
-		Route::get('/create', 'TutorController@create')->name('tutors.create');
-		Route::post('/store', 'TutorController@store')->name('tutors.store');
+		Route::get('/create_step2', 'TutorController@create_step2')->name('tutors.create_step2');
+		Route::post('/store_step2', 'TutorController@store_step2')->name('tutors.store_step2');
 		Route::get('/show', 'TutorController@show')->name('tutors.show');
 		Route::get('/edit', 'TutorController@edit')->name('tutors.edit');
 		Route::patch('/update', 'TutorController@update')->name('tutors.update');

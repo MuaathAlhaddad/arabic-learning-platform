@@ -10,46 +10,70 @@ use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
+    public function create() {
+        return view('students.create');
+    }
+
+
+    public function store () {
+
+        $validatedAttributes = $this->validate_Attributes();
+        $validatedAttributes['password'] = Hash::make(request('password'));
+        $student = Student::create($validatedAttributes);
+        Auth::guard('student')->login($student);
+        return redirect()->intended(route('tutors.index'))->with('message', 'ACCOUNT CREATED SUCCESSFULLY
+        !');
+
+    }
+
     public function show() {
         $student = Student::find(Auth::id());
 
         return view('students.show', compact('student'));
     }
 
-    public function update_photo(Request $request) {
-        $request->validate([
+    public function update_photo() {
+        request()->validate([
             'profile_photo'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
        ]);
 
-        $path = $request->file('profile_photo')->store('public/students/profiles');
-        $profile = ltrim($path,"public/students/profiles/");
+        $path = request()->file('profile_photo')->store('public/students/profiles');
+        $profile = basename($path);
 
         $student = Student::find(Auth::id());
         $student->profile_photo = $profile;
         $student->save();
 
-        return redirect()->back()->with('status', 'YOUR PHOHO HAS BEEN UPDATED SUCCESSFULLY!');
+        return redirect()->back()->with('message', 'YOUR PHOHO HAS BEEN UPDATED SUCCESSFULLY!');
     }
+    
     public function edit() {
         return view('students.edit');
     }
 
-    public function update(Request $request) {
-        
-        $validatedData = $request->validate([
+    public function update() {
+        $validatedAttributes = $this->validate_Attributes();
+        $validatedAttributes['password'] = Hash::make(request('password'));
+        $student = Student::findOrFail(Auth::id())->update($validatedAttributes);
+       return redirect()->back()->with('message', 'YOUR ACCOUNT HAS BEEN UPDATED SUCCESSFULLY!');
+    }
+
+    public function validate_Attributes () {
+        $validatedAttributes = request()->validate([
             'first_name'      => 'bail|required|string|min:3|max:10',
             'last_name'       => 'required|string|min:3|max:10',
             'password'       => 'required|confirmed|min:6',
             'gender'       => 'required',
        ]);
-       $student = Student::find(Auth::id());
-
-       $student->first_name = $request->first_name;
-       $student->last_name = $request->last_name;
-       $student->password = Hash::make($request->password);
-       $student->gender = $request->gender;
-       $student->save();
-
-       return redirect()->back();
+       if(Auth::user()->email == request('email')) {
+            $validatedAttributes +=request()->validate([
+                'email'        => 'required'
+            ]);
+        }else {
+            $validatedAttributes += request()->validate([
+                'email'          => 'required|email|unique:students,email|email:rfc,dns',
+            ]);
+        }
+       return $validatedAttributes;
     }
 }

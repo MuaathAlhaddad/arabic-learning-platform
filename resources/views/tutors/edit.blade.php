@@ -27,10 +27,10 @@
 				
 			<div class="form-row col-sm-12">
 					<div class="form-group col-sm-6">
-					<input type="text" class="form-control" name="first_name"  value="{{$tutor->first_name}}">
+					<input type="text" class="form-control" name="first_name" placeholder="First Name" value="{{$tutor->first_name}}">
 					</div>
 					<div class="form-group col-sm-6">
-					<input type="text" class="form-control" name="last_name" value="{{$tutor->last_name}}">
+					<input type="text" class="form-control" name="last_name" placeholder="Last Name" value="{{$tutor->last_name}}">
 					</div>
 			</div>
 
@@ -47,20 +47,20 @@
 			<!-- --------------- Email & ic_passport_no ----------- -->
 			<div class="form-row col-sm-12">
 				<div class="form-group col-sm-6">
-					<input type="text" class="form-control" name="email" value="{{$tutor->email}}">
+					<input type="text" class="form-control" placeholder="Email" name="email" value="{{$tutor->email}}">
 				</div>
 				<div class="form-group col-sm-6">
-					<input type="text" class="form-control" name="ic_passport_no" value="{{$tutor->ic_passport_no}}">
+					<input type="text" class="form-control" placeholder="IC/Passport no" name="ic_passport_no" value="{{$tutor->ic_passport_no}}">
 				</div>
 			</div>
 
 			<!-- ---------------Address & Country of Origin----------- -->
 			<div class="form-row col-sm-12">
 				<div class="form-group col-sm-6">
-				<input type="text" class="form-control" name="address" value="{{$tutor->address}}">
+				<input type="text" class="form-control" placeholder="Address" name="address" value="{{$tutor->address}}">
 				</div>
 				<div class="form-group col-sm-6">
-				<select name="country" class="form-control">
+				<select placeholder="" name="country" class="form-control">
 					<option hidden disabled selected value>Country of Origin</option>
 					<option value="Afganistan">Afghanistan</option>
 					<option value="Albania">Albania</option>
@@ -342,10 +342,10 @@
 					</div>  
 			</div>
 			<br>
-			<!-- ---------------Headline----------- -->
+			<!-- ---------------Headline @ Gender----------- -->
 			<div class="form-row col-sm-12">
 				<div class="form-group col-sm-6">
-				<input type="text" class="form-control" name="headline" value="{{$tutor->headline}}">
+				<input type="text" class="form-control" name="headline" placeholder="Headline" value="{{$tutor->headline}}">
 				</div>
 				<div class="form-group col-sm-6">
 				<select name="gender" class="form-control">

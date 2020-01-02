@@ -8,7 +8,7 @@
                 <div class="card-header bg-dark" style="color: white;">{{ __('Register As Student') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('students.register.submit') }}">
+                    <form method="POST" action="{{ route('students.store') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -42,7 +42,8 @@
                                 <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
                                 <div class="col-md-6">
                                         <select name="gender" class="form-control @error('gender') is-invalid @enderror">
-                                           <option value="male">Male</option>
+                                           <option hidden disabled selected value>Gender</option>
+                                            <option value="male">Male</option>
                                            <option value="female">Female</option>
                                         </select>
                                         @error('gender')
