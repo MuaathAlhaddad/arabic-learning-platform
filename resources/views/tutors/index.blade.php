@@ -80,10 +80,10 @@
 		@foreach ($tutors as $tutor)
 
 		<div  class="tutorCards media p-2 mb-5 rounded bg-white" style="width: 60rem; height: 15rem; font-family: 'segoe ui'; font-size: 1rem;" > 
-			<img class="mr-3 img-thumbnail" width="150px" height="150px" src="{{ asset('storage/profiles/'.$tutor->profile_photo) }}" alt="Card image cap">
+			{{-- <img class="mr-3 img-thumbnail" width="150px" height="150px" src="{{ asset('storage/profiles/'.$tutor->profile_photo) }}" alt="Card image cap"> --}}
 			
 			{{-- for the random photo used by seeds --}}
-			{{-- <img class="mr-3 img-thumbnail" width="150px" height="150px" src="{{ $tutor->profile_photo }}" alt="Card image cap"> --}}
+			<img class="mr-3 img-thumbnail" width="150px" height="150px" src="{{ $tutor->profile_photo }}" alt="Card image cap">
 
 			<div class="media-body">
 				<h5 class="m-0 mt-2 my-1 text-uppercase" style="height: 25px; font-size: 20px;" > {{ $tutor->first_name }} {{$tutor->last_name}}</h5>

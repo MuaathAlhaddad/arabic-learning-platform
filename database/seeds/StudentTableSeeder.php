@@ -17,6 +17,7 @@ class StudentTableSeeder extends Seeder
             'first_name' => 'Muaath',
             'last_name'  => 'Almrham',
             'email'      => 'muaath2000@gmail.com',
+            'profile_photo' => "http://lorempixel.com/200/200/nature/",
             'password'   => Hash::make('01128853086'),
             'gender'    =>'male'
         ]);

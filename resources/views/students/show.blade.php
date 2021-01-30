@@ -227,7 +227,10 @@
 
 						<!----------------------left side (Photo profile)------------------>
 						<div class="col-lg-4 order-lg-1 text-center">
-							<img class="img-thumbnail" src="{{$student->profile_photo === null ? '//placehold.it/150' : asset('storage/students/profiles/'.$student->profile_photo)}}" class="mx-auto img-fluid img-circle d-block" width="150px" height="150px" alt="avatar">
+							{{-- <img class="img-thumbnail" src="{{$student->profile_photo === null ? '//placehold.it/150' : asset('storage/students/profiles/'.$student->profile_photo)}}" class="mx-auto img-fluid img-circle d-block" width="150px" height="150px" alt="avatar"> --}}
+							{{-- for the random photo used by seeds --}}
+							<img class="img-thumbnail" src="{{ Auth::guard('student')->user()->profile_photo}}" class=".animated .swing infinite" width="150" height="150" alt="">
+
 							<form action="{{route('students.update_photo')}}" method="post" enctype="multipart/form-data">
 								@csrf
 								<div class="form-row col-sm-12 mt-3 mb-3">

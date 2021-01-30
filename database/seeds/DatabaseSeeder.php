@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminTableSeeder::class);
         $this->call(PackageSeeder::class);
         $this->call(DayTimeSeeder::class);
-        // $this->call(TutorTableSeeder::class);
+        $this->call(TutorTableSeeder::class);
         $this->call(StudentTableSeeder::class);
 
         

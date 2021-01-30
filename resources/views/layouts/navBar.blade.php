@@ -41,7 +41,10 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 
-                                  <img class="img-thumbnail" src="{{asset ('storage/students/profiles/'.Auth::guard('student')->user()->profile_photo)}}" class=".animated .swing infinite" width="30" height="30" alt="">
+                                  {{-- <img class="img-thumbnail" src="{{asset ('storage/students/profiles/'.Auth::guard('student')->user()->profile_photo)}}" class=".animated .swing infinite" width="30" height="30" alt=""> --}}
+
+                                  {{-- for the random photo used by seeds --}}
+                                  <img class="img-thumbnail" src="{{ Auth::guard('student')->user()->profile_photo}}" class=".animated .swing infinite" width="30" height="30" alt="">
 
                               Hello, Student {{ Auth::guard('student')->user()->first_name }} <span class="caret"></span>
                               
